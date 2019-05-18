@@ -8,7 +8,14 @@
   <body>
     <h1>Resultado: <span id="result"></span></h1>
   </body>
+
+  <!-- AQUI QUE ACONTECE A MÁGICA QUE IRÁ PARA O MOBILE-->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
   <script>
-    console.log("OLA MUNDO!")
+    var socket = io.connect('//' + document.domain + ':' + location.port);
+    socket.on('mobile', function(data) {
+      let result = document.getElementById("result");
+      result.innerHTML = data
+    });
   </script>
 </html>
