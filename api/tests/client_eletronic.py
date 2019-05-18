@@ -3,7 +3,7 @@ import requests
 import json
 
 DATA = {
-	  "direction": "direita",
+	  "direction": "esquerda",
 	  "distance": "2 metros"
 }
 
