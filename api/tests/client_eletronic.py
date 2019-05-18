@@ -30,6 +30,7 @@ def send(data):
         print(error.get('message', 'Erro desconhecido'))
         return False
 
+    print(response.status_code)
     return True
 
 

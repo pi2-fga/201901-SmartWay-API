@@ -3,7 +3,11 @@
 Para testar execute os comandos abaixo:
 
 ```
-docker-compose up
+RODAR O RABBITMQ:
+  $ docker-compose up
+
+RODAR O SERVIDOR:
+  $ gunicorn -b 0.0.0.0:80 wsgi --reload --log-level DEBUG --workers 5
 
 RECEPTORES:
   $ node api/tests/receiver.js
@@ -17,10 +21,12 @@ TRANSMISSOR:
 
 **1)** Inserir o código do arquivo ```client_eletronic``` no
 servidor que se encontra no seu raspberryPI para envio
-de dados para o nosso servidor.
+de dados para o nosso servidor de fila de mensagens.
 
 **2)** Insira um dos receivers no código que irá receber as notificações
 do servidor do raspberryPI, por exemplo, no seu site ou aplicativo.
+
+**3)**: No seu site ou aplicativo vc também pode consumir um dos nossos endpoints.
 
 ### Endpoints
 

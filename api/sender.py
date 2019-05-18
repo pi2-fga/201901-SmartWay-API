@@ -1,3 +1,4 @@
+from constants import IP
 import pika
 import os
 import json
@@ -9,7 +10,7 @@ class Sender(object):
     para a fila de mensagens.
     """
 
-    def __init__(self, data="Olaa mundo!"):
+    def __init__(self, data):
         """
         Construtor
         """
@@ -24,9 +25,6 @@ class Sender(object):
         """
         Faz a conecção com o servidor do RabbitMQ
         """
-
-        # IP da máquina que irá fazer as conecções
-        IP = "localhost"
 
         # Estabelecer conecção com o servidor do RABBITMQ
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=IP))
@@ -45,8 +43,6 @@ class Sender(object):
             routing_key='message_queue',
             body=json.dumps(self.data)
         )
-
-        print(" [x] Sent 'Hello World!'")
 
     def close_connection(self):
         """
