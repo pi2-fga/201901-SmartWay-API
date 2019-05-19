@@ -77,6 +77,8 @@ Status:
 * 200 - OK
 * 400 - BAD REQUEST
 
+![img](https://user-images.githubusercontent.com/14116020/57976637-441b5d00-79bb-11e9-822c-8cd0d6aa083e.png)
+
 ### Dependências
 
 1) docker

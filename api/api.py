@@ -5,6 +5,7 @@ from sender import Sender
 from http import HTTPStatus
 from werkzeug.utils import secure_filename
 import os
+import shutil
 
 UPLOAD_FOLDER = "img"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -71,11 +72,17 @@ def detect_crosswalk():
                 status_code=HTTPStatus.BAD_REQUEST
             )
 
+        try:
+            os.mkdir("img")
+        except Exception:
+            pass
+
         if img and allowed_file(img.filename):
             filename = secure_filename(img.filename)
             img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             text, is_crosswalk = CrosswalkCNN.crosswalk_detector("./img/" + img.filename)
-            # Usar CNN aqui!
+
+            shutil.rmtree("./img")
 
             return jsonify({
                 "result": is_crosswalk,
