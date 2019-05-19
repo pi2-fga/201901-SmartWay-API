@@ -1,9 +1,17 @@
 from flask import Flask, jsonify, request
+from cnn import CrosswalkCNN
 from exceptions import APIException
 from sender import Sender
 from http import HTTPStatus
+from werkzeug.utils import secure_filename
+import os
+
+UPLOAD_FOLDER = "img"
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 @app.route("/send_message/", methods=['POST'])
 def message_received():
@@ -31,6 +39,53 @@ def message_received():
     Sender(data)
 
     return jsonify(data)
+
+
+def allowed_file(filename):
+    """
+    Verifica se o arquivo tem a extensão
+    permitida para a inserção.
+    """
+
+    return "." in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/detect_crosswalk/", methods=['POST'])
+def detect_crosswalk():
+    """
+    Endpoint para detecção de faixas de pedestre.
+    """
+
+    if request.method == "POST":
+        if "file" not in request.files:
+            raise APIException(
+                "Imagem não encontrada.",
+                status_code=HTTPStatus.BAD_REQUEST
+            )
+
+        img = request.files['file']
+
+        if img.filename == '':
+            raise APIException(
+                "Nenhuma imagem selecionada.",
+                status_code=HTTPStatus.BAD_REQUEST
+            )
+
+        if img and allowed_file(img.filename):
+            filename = secure_filename(img.filename)
+            img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            text, is_crosswalk = CrosswalkCNN.crosswalk_detector("./img/" + img.filename)
+            # Usar CNN aqui!
+
+            return jsonify({
+                "result": is_crosswalk,
+                "message": text
+            })
+
+        raise APIException(
+            "Extensão da imagem invalida.",
+            status_code=HTTPStatus.BAD_REQUEST
+        )
 
 
 @app.errorhandler(APIException)

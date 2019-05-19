@@ -3,11 +3,18 @@
 Para testar execute os comandos abaixo:
 
 ```
+INSTALANDO OPENCV:
+  $ sudo apt-get install python-opencv
+
 RODAR O RABBITMQ:
   $ docker-compose up
 
+ENTRAR NA PASTA DA API:
+  $ cd api
+
 RODAR O SERVIDOR:
-  $ gunicorn -b 0.0.0.0:80 wsgi --reload --log-level DEBUG --workers 5
+  $ pip install -r requirements.txt
+  $ gunicorn -b 0.0.0.0:3000 wsgi --reload --log-level DEBUG --workers 5 --daemon
 
 RECEPTORES:
   $ node api/tests/receiver.js
@@ -16,6 +23,9 @@ RECEPTORES:
 TRANSMISSOR:
   $ python3 api/tests/client_eletronic.py
 ```
+
+OBS: use o ```--daemon``` somente em produção para deixar o servidor em modo background.
+OBS: O OpenCV não funciona em ambientes virtuais do python.
 
 ### Como funciona
 
@@ -45,6 +55,22 @@ Entrada:
 ```
 
 Saída: N/A
+
+Status:
+
+* 200 - OK
+* 400 - BAD REQUEST
+
+**2)** /detect_crosswalk/ - POST
+
+Endpoint para detecção de faixas de pedestre.
+
+Entrada: Imagem
+
+Saída: {
+  "result": True OU False,
+  "message": "É uma faixa de pedestre." OU "Não é uma faixa de pedestre."
+}
 
 Status:
 
