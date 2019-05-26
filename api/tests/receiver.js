@@ -3,7 +3,7 @@
 
 let amqp = require('amqplib/callback_api');
 
-amqp.connect('amqp://localhost', function(error0, connection) {
+amqp.connect('amqp://18.228.137.154', function(error0, connection) {
     if (error0) throw error0;
 
     connection.createChannel(function(error1, channel) {

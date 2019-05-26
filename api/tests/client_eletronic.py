@@ -14,7 +14,7 @@ def send(data):
     de software.
     """
 
-    url = "http://0.0.0.0:3000/send_message/"
+    url = "http://18.228.137.154:3000/send_message/"
 
     header = {'Content-type': 'application/json'}
 

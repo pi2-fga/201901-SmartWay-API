@@ -31,7 +31,10 @@ class Sender(object):
         self.channel = self.connection.channel()
 
         # Criar a fila de mensagens, se ela não existir as mensagens serão descartadas.
-        self.channel.queue_declare(queue='message_queue')
+        self.channel.queue_declare(queue='message_queue', durable=True)
+
+        # Cria o gerenciador de mensagens, pega as mensagens e insere nas filas
+        self.channel.exchange_declare(exchange='direct_log', exchange_type='direct')
 
     def send(self):
         """
@@ -39,7 +42,7 @@ class Sender(object):
         """
 
         self.channel.basic_publish(
-            exchange='',
+            exchange='direct_log',
             routing_key='message_queue',
             body=json.dumps(self.data)
         )

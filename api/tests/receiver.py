@@ -1,7 +1,7 @@
 import pika
 import json
 
-IP = "localhost"
+IP = "18.228.137.154"
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=IP))
 channel = connection.channel()
