@@ -25,7 +25,7 @@ TRANSMISSOR:
 
 RODAR O SERVIDOR WEBSOCKET:
   $ pip install -r requirements.txt
-  $ gunicorn -b 0.0.0.0:5000 wsgi --reload --log-level DEBUG --worker-class eventlet -w 1
+  $ gunicorn -b 0.0.0.0:5000 wsgi --reload --log-level DEBUG --worker-class eventlet -w 1 --daemon
 ```
 
 OBS: use o ```--daemon``` somente em produção para deixar o servidor em modo background.
