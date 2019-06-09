@@ -12,7 +12,7 @@ RODAR O RABBITMQ:
 ENTRAR NA PASTA DA API:
   $ cd api
 
-RODAR O SERVIDOR:
+RODAR O SERVIDOR (API):
   $ pip install -r requirements.txt
   $ gunicorn -b 0.0.0.0:3000 wsgi --reload --log-level DEBUG --workers 5 --daemon
 
@@ -22,6 +22,10 @@ RECEPTORES:
 
 TRANSMISSOR:
   $ python3 api/tests/client_eletronic.py
+
+RODAR O SERVIDOR WEBSOCKET:
+  $ pip install -r requirements.txt
+  $ python3 websocket.py
 ```
 
 OBS: use o ```--daemon``` somente em produção para deixar o servidor em modo background.
