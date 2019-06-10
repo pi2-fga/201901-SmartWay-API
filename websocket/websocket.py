@@ -11,7 +11,12 @@ def connect():
 @socketio.on('alert')
 def handle_message(message):
     print('Mensagem recebida: ' + str(message))
-    emit('mobile', message, broadcast=True)
+    emit('mobile_alert', message, broadcast=True)
+
+@socketio.on('batery')
+def handle_batery(message):
+    print('Nível de bateria:' + str(message))
+    emit('mobile_batery', message, broadcast=True)
 
 @socketio.on('disconnect')
 def disconnect():
